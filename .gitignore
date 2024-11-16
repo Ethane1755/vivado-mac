@@ -1,0 +1,12 @@
+.cache/
+.java/
+.Xilinx/
+Xilinx/
+logs/
+installer/
+*.log
+*.jou
+*.bin
+.DS_Store
+.sudo_as_admin_successful
+secret.txt
