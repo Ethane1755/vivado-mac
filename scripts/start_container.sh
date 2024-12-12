@@ -15,7 +15,7 @@ docker run --init --rm --network=host \
     sudo -H -u user bash scripts/startup.sh &
 
 # monitor vivado container
-sleep 1
+sleep 5
 while [[ $(docker ps) == *vivado* ]]
 do
     sleep 1
