@@ -26,10 +26,23 @@ get_credentials() {
 
 SECRET_FILE="$script_dir/secret.txt"
 
-cat SECRET_FILE
+INSTALLATION_FILE_PATH=$(cat "$INSTALLATION_BIN_LOG_PATH" | xargs)
+
+step "try to find $INSTALLATION_FILE_PATH"
+
+if [ -f "$script_dir/$INSTALLATION_FILE_PATH" ]; then
+    success "File exists: $INSTALLATION_FILE_PATH"
+else
+    error "File does not exist: $INSTALLATION_FILE_PATH"
+    error "cleaning up cache files please run this script again"
+    rm $script_dir/installation_location.txt
+    exit
+fi
+
+cat $SECRET_FILE
 if ! [ -d "$script_dir/../installer" ]; then
     step "start extract installer"
-    eval "$script_dir/../FPGAsAdaptiveSoCsUnified2024.1Lin64.bin --target $script_dir/../installer --noexec"
+    eval "$script_dir/$INSTALLATION_FILE_PATH --target $script_dir/../installer --noexec"
 else
     debug "The installer already extracted"
 fi

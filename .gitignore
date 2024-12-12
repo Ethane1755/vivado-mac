@@ -10,3 +10,5 @@ installer/
 .DS_Store
 .sudo_as_admin_successful
 secret.txt
+vivado_pid*
+installation_location.txt
