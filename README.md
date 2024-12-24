@@ -31,29 +31,34 @@ Note: Supported board names can be listed using `openFPGALoader -h`
 4. [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
-0. **Homebrew**
+0. **Disk Space**
+    - Ensure you have at least 60GB of free disk space:
+        - ~20GB for Vivado download (this space will be freed after installation)
+        - ~40GB for program data
+1. **Homebrew**
     - Install Homebrew by running:
         ```bash
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         ```
     - Follow any additional setup instructions provided by the installer
 
-1. **Docker Desktop**
+2. **Docker Desktop**
     - Install Docker Desktop for macOS from [docker.com](https://www.docker.com/products/docker-desktop)
     - Alternatively, install via Homebrew:
         ```bash
         brew install --cask docker
         ```
 
-2. **XQuartz**
+3. **XQuartz**
     - Install via Homebrew:
         ```bash
         brew install --cask xquartz
         ```
     - After installation, restart your computer
     - Open XQuartz and enable "Allow connections from network clients" in XQuartz preferences
+    - Navigate to XQuartz -> Settings -> Security -> Allow connections from network clients
 
-3. **Vivado Installer**
+4. **Vivado Installer**
     - Download Vivado installer for Linux from [AMD/Xilinx website](https://www.xilinx.com/support/download.html)
 
 ## Installation
