@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 script_dir=$(dirname -- "$(readlink -nf $0)";)
 source "$script_dir/headers.sh"

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # # if Vivado is installed
 if [ -d "/home/user/Xilinx" ]
