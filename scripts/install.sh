@@ -43,7 +43,7 @@ fi
 if ! [ -d "$script_dir/../installer" ]; then
     step "start extract installer"
     chmod u+x $script_dir/$INSTALLATION_FILE_PATH
-    eval "$script_dir/$INSTALLATION_FILE_PATH --target $script_dir/../installer --noexec"
+    eval "\"$script_dir/$INSTALLATION_FILE_PATH\" --target \"$script_dir/../installer\" --noexec"
 else
     debug "The installer already extracted"
 fi
