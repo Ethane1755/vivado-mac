@@ -50,10 +50,19 @@ fi
 
 step "Generate AuthTokenGen"
 
+GENERATED_TOKEN=false
+
 if [ -f "$SECRET_FILE" ]; then
         info "Credentials file found."
-        expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
-elif ! /home/user/installer/xsetup -b AuthTokenGen
+        if ! expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"; then
+            error secret.txt corrupt. removing $SECRET_FILE
+            rm $SECRET_FILE
+        else
+            GENERATED_TOKEN=true
+        fi
+fi
+
+if ! $GENERATED_TOKEN && ! /home/user/installer/xsetup -b AuthTokenGen
 then
     warning "Can't Generate AuthTokenGen"
     step "now using expect method"
@@ -74,5 +83,7 @@ then
     expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
 fi
 
-step "Start Download and Installing"
-/home/user/installer/xsetup -c "/home/user/scripts/vivado_settings.txt" -b Install -a XilinxEULA,3rdPartyEULA
+if $GENERATED_TOKEN; then
+    step "Start Download and Installing"
+    /home/user/installer/xsetup -c "/home/user/scripts/vivado_settings.txt" -b Install -a XilinxEULA,3rdPartyEULA
+fi
