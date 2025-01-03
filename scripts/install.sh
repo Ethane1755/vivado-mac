@@ -49,7 +49,11 @@ else
 fi
 
 step "Generate AuthTokenGen"
-if ! /home/user/installer/xsetup -b AuthTokenGen
+
+if [ -f "$SECRET_FILE" ]; then
+        info "Credentials file found."
+        expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
+elif ! /home/user/installer/xsetup -b AuthTokenGen
 then
     warning "Can't Generate AuthTokenGen"
     step "now using expect method"
