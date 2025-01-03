@@ -32,8 +32,8 @@ Note: Supported board names can be listed using `openFPGALoader -h`
 
 ## Prerequisites
 0. **Disk Space**
-    - Ensure you have at least 60GB of free disk space:
-        - ~20GB for Vivado download (this space will be freed after installation)
+    - Ensure you have at least 120GB of free disk space:
+        - ~80GB for Vivado download and Extract (this space will be freed after installation)
         - ~40GB for program data
 1. **Homebrew**
     - Install Homebrew by running:
