@@ -42,7 +42,7 @@ fi
 # cat $SECRET_FILE
 if ! [ -d "$script_dir/../installer" ]; then
     step "start extract installer"
-    chmod u+x $script_dir/$INSTALLATION_FILE_PATH
+    chmod u+x "$script_dir/$INSTALLATION_FILE_PATH"
     eval "\"$script_dir/$INSTALLATION_FILE_PATH\" --target \"$script_dir/../installer\" --noexec"
 else
     debug "The installer already extracted"
@@ -81,6 +81,8 @@ then
     step "Generate AuthTokenGen"
 
     expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
+else
+    GENERATED_TOKEN=true
 fi
 
 if $GENERATED_TOKEN; then
