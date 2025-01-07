@@ -80,7 +80,7 @@ Note: Supported board names can be listed using `openFPGALoader -h`
     ```
 
 3. **Install Vivado**
-    - When prompted, drag and drop the downloaded Vivado installer into the terminal
+    - When prompted, drag and drop the downloaded `Vivado installer` (from prerequisites no.4) into the terminal
     - Follow the installation instructions in the Vivado installer
     - Select desired Vivado components
 
