@@ -1,3 +1,7 @@
+> [!NOTE]  
+> Tested on MacOS 15 Sequoia.
+> MacOS 14 is not supported.
+
 # Vivado on macOS via Docker
 
 This repository provides a solution to run Xilinx Vivado on macOS using Docker containerization.
