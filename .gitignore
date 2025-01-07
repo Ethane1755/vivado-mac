@@ -12,3 +12,7 @@ installer/
 secret.txt
 vivado_pid*
 installation_location.txt
+Desktop
+.local
+.config
+.*_history

@@ -3,6 +3,26 @@
 script_dir=$(dirname -- "$(readlink -nf $0)";)
 source "$script_dir/headers.sh"
 
+declare -A VERSIONS=(
+    ["202402"]="20c806793b3ea8d79273d5138fbd195f"
+    ["202401"]="8b0e99a41b851b50592d5d6ef1b1263d"
+    ["202302"]="b8c785d03b754766538d6cde1277c4f0"
+)
+
+get_version_from_hash() {
+    local hash="$1"
+    
+    for version in "${!VERSIONS[@]}"; do
+        if [ "${VERSIONS[$version]}" == "$hash" ]; then
+            echo "$version"
+            return 0
+        fi
+    done
+    
+    echo ""
+    return 1
+}
+
 get_credentials() {
     local secret_file="$1"
     local secret_dir=$(dirname "$secret_file")
@@ -27,6 +47,21 @@ get_credentials() {
 SECRET_FILE="$script_dir/secret.txt"
 
 INSTALLATION_FILE_PATH=$(cat "$INSTALLATION_BIN_LOG_PATH" | xargs)
+
+INSTALLER_HASH=($(md5sum "$script_dir/$INSTALLATION_FILE_PATH"))
+VERSION=$(get_version_from_hash "$INSTALLER_HASH")
+
+if [ $VERSION == "" ]; then
+    error The installer $INSTALLATION_FILE_PATH hash not match. please make sure you download linux installer and support version.
+    exit 1
+fi
+
+if [ $VERSION == "202401" ]; then
+    error version $VERSION is not support please use latest version of year.
+    exit 1
+fi
+
+info The installer is version $VERSION
 
 step "try to find $INSTALLATION_FILE_PATH"
 
@@ -87,5 +122,5 @@ fi
 
 if $GENERATED_TOKEN; then
     step "Start Download and Installing"
-    /home/user/installer/xsetup -c "/home/user/scripts/vivado_settings.txt" -b Install -a XilinxEULA,3rdPartyEULA
+    /home/user/installer/xsetup -c "/home/user/scripts/vivado_settings_$VERSION.txt" -b Install -a XilinxEULA,3rdPartyEULA
 fi

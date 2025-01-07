@@ -3,11 +3,11 @@
 script_dir=$(dirname -- "$(readlink -nf $0)";)
 source "$script_dir/headers.sh"
 
-if [ -d "$script_dir/../Xilinx" ]
-then
-	error "A previous installation was found. To reinstall, remove the Xilinx folder."
-	exit 1
-fi
+# if [ -d "$script_dir/../Xilinx" ]
+# then
+# 	error "A previous installation was found. To reinstall, remove the Xilinx folder."
+# 	exit 1
+# fi
 
 if ! [ -f "$INSTALLATION_BIN_LOG_PATH" ]; then
     drag_and_drop_files "please drags and drop your vivado installer.bin to this terminal" "copy" $INSTALLATION_BIN_LOG_PATH
