@@ -108,7 +108,12 @@ Note: Supported board names can be listed using `openFPGALoader -h`
     - Try restarting XQuartz
     - Run `xhost + localhost` before starting container
 - For permission issues, ensure setup script has executable permissions (`chmod +x scripts/setup.sh`)
-
+2. **100 Killed Error**
+    If you encounter the following error while using version `2024.2`:
+    ```
+    100 Killed ${X_JAVA_HOME} /bin/java ${ARGS} -cp ${X_CLASS_PATH}    comxilinx.installerapi.InstallerLauncher "$@"
+    ```
+    remove the Xilinx folder and try using version 2023 instead.
 
 ## License
 
