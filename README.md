@@ -13,20 +13,18 @@ The typical FPGA development workflow in Vivado consists of:
 2. Synthesis
 3. Implementation
 4. Generate Bitstream
+5. Program to [Basys3](https://digilent.com/reference/_media/basys3:basys3_rm.pdf?srsltid=AfmBOorSKF2T_MfS024F4IiVmQr1ViDkssoCMtlG48_RoII45ntqSTt2) Board
 
-### Programming with Docker Limitation
-
-When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
-
-1. Generate bitstream in containerized Vivado
-2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
-3. Use `openFPGALoader` on host to program FPGA:
+> ### Programming with Docker Limitation (Solved)
+> When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
+> 1. Generate bitstream in containerized Vivado
+> 2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
+> 3. Use `openFPGALoader` on host to program FPGA:
     ```bash
     brew install openfpgaloader
     openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
     ```
 
-Note: Supported board names can be listed using `openFPGALoader -h`
 
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
@@ -62,6 +60,11 @@ Note: Supported board names can be listed using `openFPGALoader -h`
     - Open XQuartz and enable "Allow connections from network clients" in XQuartz preferences
     - Navigate to XQuartz -> Settings -> Security -> Allow connections from network clients
 
+4. **OpenFPGALoader**
+    ```bash
+    brew install openfpgaloader
+    ```
+
 4. **Vivado Installer**
     - Download Vivado installer for Linux from [AMD/Xilinx website](https://www.xilinx.com/support/download.html)
 
@@ -89,9 +92,10 @@ Note: Supported board names can be listed using `openFPGALoader -h`
     - Check [X11 Display Issues](#x11-display-issues) if you encounter problems
     - XQuartz must be running before starting Vivado
 
-1. Start XQuartz
+1. Start Xilinx Virtual Cable (XVC)
     ```bash
-    xhost + localhost
+    # make sure your are in the vivado-mac directory
+    ./openFPGALoader -b basys3 --xvc
     ```
 
 2. Launch Vivado container:
@@ -117,7 +121,7 @@ Note: Supported board names can be listed using `openFPGALoader -h`
     ```
     100 Killed ${X_JAVA_HOME} /bin/java ${ARGS} -cp ${X_CLASS_PATH}    comxilinx.installerapi.InstallerLauncher "$@"
     ```
-    remove the Xilinx folder and try using version 2023 instead.
+    try to increase Docker memory limit: Open Docker Dashboard > Click on settings > Resource > Advanced you will see the Memory limitation
 
 ## License
 
@@ -126,6 +130,10 @@ This project is licensed under the BSD 3-Clause License - see the LICENSE file f
 ## Vivado License
 
 Vivado requires a license from AMD/Xilinx. Please obtain appropriate licensing from AMD/Xilinx website.
+
+## OpenFPGALoader License
+
+This repository contains the built binary of [OpenFPGALoader](https://github.com/trabucayre/openFPGALoader) that enable XVC feature for mac
 
 ## Disclaimer
 
