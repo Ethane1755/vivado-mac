@@ -16,8 +16,6 @@ docker run --init --rm --network=host \
     --platform linux/amd64 ubuntu_vivado_env \
     sudo -H -u user bash scripts/startup.sh &
 
-./$script_dir/openFPGALoader --verbose-level -1 -b basys3 --xvc & OPENFPGALOAD_PID=$!
-
 # monitor vivado container
 sleep 10
 while [[ $(docker ps) == *vivado* ]]
