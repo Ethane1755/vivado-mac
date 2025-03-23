@@ -3,7 +3,6 @@ script_dir=$(dirname -- "$(readlink -nf $0)";)
 function stop_container {
     docker kill vivado > /dev/null 2>&1
     echo "Stopped Docker container"
-    kill -9 $OPENFPGALOAD_PID
     exit 0
 }
 trap 'stop_container' INT
