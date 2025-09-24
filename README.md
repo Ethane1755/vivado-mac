@@ -17,15 +17,18 @@ The typical FPGA development workflow in Vivado consists of:
 
 When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use openFPGALoader:
 
-1. Generate bitstream in containerized Vivado
-2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
-3. Use openFPGALoader on host to program FPGA:
+1. Use openFPGALoader on host to program FPGA:
    ```bash
    brew install openfpgaloader
    openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
    ```
-
-> Just run openFPGAloader before running Vivado (remember to plug in your FPGA), and Vivado can automatically recognize the FPGA board in hardware manager(tested on Artix-7 family)
+2. Run openFPGALoader before launching Vivado
+> For connecting to FPGA, if there is no FPGA then no need to run this
+```bash
+# Make sure you are in the vivado-mac directory
+./openFPGALoader -b basys3 --xvc
+```
+> Just run openFPGALoader before running Vivado (remember to plug in your FPGA), and Vivado can automatically recognize the FPGA board in hardware manager(tested on Artix-7 family)
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
