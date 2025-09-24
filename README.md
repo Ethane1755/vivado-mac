@@ -2,7 +2,7 @@
 
 This repository provides a solution to run Xilinx Vivado on macOS using Docker containerization.
 
-> **Note:** Tested on macOS 16 Tahoe. macOS 14 is not supported.
+> **Note:** Tested on macOS 26 Tahoe.
 
 ## Normal Vivado Workflow
 
