@@ -106,6 +106,12 @@ During setup, you'll be asked if you want to add `vivado` to your PATH. If you c
 
 ### Quick Launch (Recommended)
 
+#### Start Xilinx Virtual Cable (XVC)
+```bash
+# Make sure you are in the vivado-mac directory
+./openFPGALoader -b basys3 --xvc
+```
+
 #### If you added vivado to PATH during setup:
 ```bash
 vivado
@@ -128,12 +134,6 @@ The launcher script will:
 #### Ensure Display Setup
 - Check [X11 Display Issues](#x11-display-issues) if you encounter problems
 - XQuartz must be running before starting Vivado (The script should do it for you.)
-
-#### Start Xilinx Virtual Cable (XVC)
-```bash
-# Make sure you are in the vivado-mac directory
-./openFPGALoader -b basys3 --xvc
-```
 
 #### Launch Vivado container
 ```bash
