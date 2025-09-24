@@ -73,6 +73,7 @@ brew install openfpgaloader
 
 ### Vivado Installer
 Download Vivado installer for Linux from AMD/Xilinx website. (versions 2024.2/ 2023.2)
+> Should be something like "AMD Unified Installer for FPGAs & Adaptive SoCs 2024.2: Linux Self Extracting Web Installer (BIN - 303.93 MB) "
 
 ## Installation
 
@@ -93,31 +94,34 @@ cd vivado-mac
 ./scripts/setup.sh
 ```
 
-During setup, you'll be asked if you want to add `vivado` to your PATH. If you choose "yes":
-- You can run `vivado` from anywhere in your terminal
-- The script will create a symlink in `/usr/local/bin/` or update your shell profile
-
-### Install Vivado
+#### Install Vivado
 - When prompted, drag and drop the downloaded Vivado installer into the terminal
 - Follow the installation instructions in the Vivado installer  
 - Select desired Vivado components
+
+#### add to PATH
+During setup, you'll be asked if you want to add `vivado` to your PATH. If you choose "y":
+- You can run `vivado` from anywhere in your terminal
+- The script will create a symlink in `/usr/local/bin/` or update your shell profile
 
 ## Usage
 
 ### Quick Launch (Recommended)
 
-#### Start Xilinx Virtual Cable (XVC)
+#### Start Xilinx Virtual Cable (XVC) 
+> For connecting to FPGA, if there is no FPGA then no need to run this
 ```bash
 # Make sure you are in the vivado-mac directory
 ./openFPGALoader -b basys3 --xvc
 ```
 
-#### If you added vivado to PATH during setup:
+#### Start Vivado
+##### If you added vivado to PATH during setup:
 ```bash
 vivado
 ```
 
-#### If you didn't add vivado to PATH:
+##### If you didn't add vivado to PATH:
 ```bash
 # Make sure you are in the vivado-mac directory
 ./vivado
