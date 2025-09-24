@@ -1,0 +1,19 @@
+Vivado-on-Mac Friend Package
+===========================
+
+Created: Wed Sep 24 10:37:18 CST 2025
+Package Size: 2.6M
+
+Contents:
+- vivado-mac/              (Complete repository with optimized scripts)
+- README.md               (Setup instructions)
+
+Installation:
+1. Extract this package
+2. Install prerequisites (Docker Desktop, XQuartz)
+3. Download Vivado 2024.2 Linux installer from AMD/Xilinx
+4. Run: cd vivado-mac && ./scripts/setup.sh
+5. Follow setup instructions
+
+This package contains the same optimized configuration as the original
+but requires friends to download Vivado separately due to licensing.

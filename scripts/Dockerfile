@@ -18,7 +18,13 @@ RUN apt-get install -y --no-install-recommends \
     expect sudo libxtst6 libgdk-pixbuf2.0-0 libgtk2.0-0 libgtk-3-0 libglib2.0-0\
     python3-pip python3-dev build-essential git gcc-multilib g++ \
     ocl-icd-opencl-dev libjpeg62-dev libc6-dev-i386 graphviz make \
-    unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni
+    unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni \
+    fonts-dejavu fonts-dejavu-core fonts-dejavu-extra fonts-liberation \
+    fontconfig x11-xserver-utils xfonts-base xfonts-75dpi xfonts-100dpi \
+    libxrender1 libxrandr2 libxss1 libxcursor1 libxcomposite1 libxdamage1 \
+    libxfixes3 libxi6 libxinerama1 libgl1-mesa-glx libglu1-mesa \
+    gtk2-engines-murrine gtk2-engines-pixbuf libcanberra-gtk-module \
+    libcanberra-gtk3-module dbus-x11 at-spi2-core
 
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \

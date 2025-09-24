@@ -1,143 +1,159 @@
-> [!NOTE]  
-> Tested on MacOS 15 Sequoia.
-> MacOS 14 is not supported.
-
 # Vivado on macOS via Docker
 
 This repository provides a solution to run Xilinx Vivado on macOS using Docker containerization.
+
+> **Note:** Tested on macOS 16 Tahoe. macOS 14 is not supported.
 
 ## Normal Vivado Workflow
 
 The typical FPGA development workflow in Vivado consists of:
 1. RTL Design (Verilog/VHDL)
-2. Synthesis
+2. Synthesis  
 3. Implementation
 4. Generate Bitstream
-5. Program to [Basys3](https://digilent.com/reference/_media/basys3:basys3_rm.pdf?srsltid=AfmBOorSKF2T_MfS024F4IiVmQr1ViDkssoCMtlG48_RoII45ntqSTt2) Board
+5. Program to FPGA Board
 
-> ### Programming with Docker Limitation (Solved)
-> When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
-> 1. Generate bitstream in containerized Vivado
-> 2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
-> 3. Use `openFPGALoader` on host to program FPGA:
-    ```bash
-    brew install openfpgaloader
-    openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
-    ```
+### Programming with Docker Limitation (Solved)
 
+When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use openFPGALoader:
+
+1. Generate bitstream in containerized Vivado
+2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
+3. Use openFPGALoader on host to program FPGA:
+   ```bash
+   brew install openfpgaloader
+   openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
+   ```
 
 ## Table of Contents
-1. [Prerequisites](#prerequisites)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Troubleshooting](#troubleshooting)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Creating Redistributable Package](#creating-redistributable-package)
+- [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
-0. **Disk Space**
-    - Ensure you have at least 120GB of free disk space:
-        - ~80GB for Vivado download and Extract (this space will be freed after installation)
-        - ~40GB for program data
-1. **Homebrew**
-    - Install Homebrew by running:
-        ```bash
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        ```
-    - Follow any additional setup instructions provided by the installer
 
-2. **Docker Desktop**
-    - Install Docker Desktop for macOS from [docker.com](https://www.docker.com/products/docker-desktop)
-    - Alternatively, install via Homebrew:
-        ```bash
-        brew install --cask docker
-        ```
+### Disk Space
+Ensure you have at least **120GB** of free disk space:
+- ~80GB for Vivado download and extract (this space will be freed after installation)
+- ~40GB for program data
 
-3. **XQuartz**
-    - Install via Homebrew:
-        ```bash
-        brew install --cask xquartz
-        ```
-    - After installation, restart your computer
-    - Open XQuartz and enable "Allow connections from network clients" in XQuartz preferences
-    - Navigate to XQuartz -> Settings -> Security -> Allow connections from network clients
+### Homebrew
+Install Homebrew by running:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+Follow any additional setup instructions provided by the installer.
 
-4. **OpenFPGALoader**
-    ```bash
-    brew install openfpgaloader
-    ```
+### Docker Desktop
+Install Docker Desktop for macOS from [docker.com](https://www.docker.com/products/docker-desktop)
 
-4. **Vivado Installer**
-    - Download Vivado installer for Linux from [AMD/Xilinx website](https://www.xilinx.com/support/download.html)
+Alternatively, install via Homebrew:
+```bash
+brew install --cask docker
+```
+
+### XQuartz
+Install via Homebrew:
+```bash
+brew install --cask xquartz
+```
+
+After installation:
+1. **Restart your computer**
+2. Open XQuartz and enable "Allow connections from network clients" in XQuartz preferences
+3. Navigate to **XQuartz → Settings → Security → Allow connections from network clients**
+
+### OpenFPGALoader
+```bash
+brew install openfpgaloader
+```
+
+### Vivado Installer
+Download Vivado installer for Linux from AMD/Xilinx website.
 
 ## Installation
 
-1. **Get the Repository**
-    ```bash
-    git clone https://github.com/yokeTH/vivado-mac.git
-    # or download and extract the ZIP file
-    ```
+### Get the Repository
+```bash
+git clone https://github.com/yourusername/vivado-mac.git
+# or download and extract the ZIP file
+```
 
-2. **Run Setup Script**
-    ```bash
-    cd vivado-mac
-    ./scripts/setup.sh
-    ```
+### Run Setup Script
+```bash
+cd vivado-mac
+./scripts/setup.sh
+```
 
-3. **Install Vivado**
-    - When prompted, drag and drop the downloaded `Vivado installer` (from prerequisites no.4) into the terminal
-    - Follow the installation instructions in the Vivado installer
-    - Select desired Vivado components
+### Install Vivado
+- When prompted, drag and drop the downloaded Vivado installer into the terminal
+- Follow the installation instructions in the Vivado installer  
+- Select desired Vivado components
 
 ## Usage
-0. **Ensure Display Setup**
-    - Check [X11 Display Issues](#x11-display-issues) if you encounter problems
-    - XQuartz must be running before starting Vivado
 
-1. Start Xilinx Virtual Cable (XVC)
-    ```bash
-    # make sure your are in the vivado-mac directory
-    ./openFPGALoader -b basys3 --xvc
-    ```
+### Ensure Display Setup
+- Check [X11 Display Issues](#x11-display-issues) if you encounter problems
+- XQuartz must be running before starting Vivado
 
-2. Launch Vivado container:
-    ```bash
-    ./scripts/start_container.sh
-    ```
-3. Vivado GUI will appear in XQuartz window
+### Start Xilinx Virtual Cable (XVC)
+```bash
+# Make sure you are in the vivado-mac directory
+./openFPGALoader -b basys3 --xvc
+```
+
+### Launch Vivado container
+```bash
+./scripts/start_container.sh
+```
+Vivado GUI will appear in XQuartz window.
+
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **X11 Display Issues**
-    - Ensure XQuartz is running
-    - In XQuartz preferences:
-      - Go to Security tab
-      - Check "Allow connections from network clients"
-    - Try restarting XQuartz
-    - Run `xhost + localhost` before starting container
-2. **For permission issues**, ensure setup script has executable permissions (`chmod +x scripts/setup.sh`)
-3. **100 Killed Error**
-    If you encounter the following error while using version `2024.2`:
-    ```
-    100 Killed ${X_JAVA_HOME} /bin/java ${ARGS} -cp ${X_CLASS_PATH}    comxilinx.installerapi.InstallerLauncher "$@"
-    ```
-    try to increase Docker memory limit: Open Docker Dashboard > Click on settings > Resource > Advanced you will see the Memory limitation
+#### X11 Display Issues
+- Ensure XQuartz is running
+- In XQuartz preferences:
+  - Go to Security tab
+  - Check "Allow connections from network clients"
+- Try restarting XQuartz
+- Run `xhost + localhost` before starting container
+
+#### Permission Issues
+Ensure setup script has executable permissions:
+```bash
+chmod +x scripts/setup.sh
+```
+
+#### 100 Killed Error
+If you encounter the following error while using version 2024.2:
+```
+100 Killed ${X_JAVA_HOME} /bin/java ${ARGS} -cp ${X_CLASS_PATH} com.xilinx.installer.api.InstallerLauncher "$@"
+```
+
+Try to increase Docker memory limit:
+1. Open Docker Dashboard
+2. Click on Settings → Resources → Advanced
+3. Increase the Memory limitation
 
 ## License
 
 This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.
 
-## Vivado License
-
+### Vivado License
 Vivado requires a license from AMD/Xilinx. Please obtain appropriate licensing from AMD/Xilinx website.
 
-## OpenFPGALoader License
-
-This repository contains the built binary of [OpenFPGALoader](https://github.com/trabucayre/openFPGALoader) that enable XVC feature for mac
+### OpenFPGALoader License
+This repository contains the built binary of OpenFPGALoader that enables XVC feature for Mac.
 
 ## Disclaimer
 
 This repository only provides the environment setup to run Vivado on Apple Silicon Macs via Docker. It does not include Vivado software itself. Users must:
+
 - Download Vivado separately from AMD/Xilinx
 - Comply with AMD/Xilinx's licensing terms
 - Use at their own risk
