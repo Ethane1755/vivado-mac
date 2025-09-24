@@ -25,11 +25,12 @@ When running Vivado in a container, direct hardware programming is not possible 
    openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
    ```
 
+> Just run openFPGAloader before running Vivado (remember to plug in your FPGA), and Vivado can automatically recognize the FPGA board in hardware manager(tested on Artix-7 family)
+
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Creating Redistributable Package](#creating-redistributable-package)
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
@@ -71,21 +72,30 @@ brew install openfpgaloader
 ```
 
 ### Vivado Installer
-Download Vivado installer for Linux from AMD/Xilinx website.
+Download Vivado installer for Linux from AMD/Xilinx website. (versions 2024.2/ 2023.2)
 
 ## Installation
 
 ### Get the Repository
 ```bash
-git clone https://github.com/yourusername/vivado-mac.git
+git clone https://github.com/ethane1755/vivado-mac.git
 # or download and extract the ZIP file
+```
+
+### Setup Verification (optional)
+```bash
+cd vivado-mac
+./scripts/verify_setup.sh
 ```
 
 ### Run Setup Script
 ```bash
-cd vivado-mac
 ./scripts/setup.sh
 ```
+
+During setup, you'll be asked if you want to add `vivado` to your PATH. If you choose "yes":
+- You can run `vivado` from anywhere in your terminal
+- The script will create a symlink in `/usr/local/bin/` or update your shell profile
 
 ### Install Vivado
 - When prompted, drag and drop the downloaded Vivado installer into the terminal
@@ -94,17 +104,38 @@ cd vivado-mac
 
 ## Usage
 
-### Ensure Display Setup
-- Check [X11 Display Issues](#x11-display-issues) if you encounter problems
-- XQuartz must be running before starting Vivado
+### Quick Launch (Recommended)
 
-### Start Xilinx Virtual Cable (XVC)
+#### If you added vivado to PATH during setup:
+```bash
+vivado
+```
+
+#### If you didn't add vivado to PATH:
+```bash
+# Make sure you are in the vivado-mac directory
+./vivado
+```
+
+The launcher script will:
+- Automatically find your vivado-mac installation
+- Start Docker Desktop if not running
+- Configure X11 forwarding
+- Launch Vivado in the container
+
+### Manual Steps (Alternative)
+
+#### Ensure Display Setup
+- Check [X11 Display Issues](#x11-display-issues) if you encounter problems
+- XQuartz must be running before starting Vivado (The script should do it for you.)
+
+#### Start Xilinx Virtual Cable (XVC)
 ```bash
 # Make sure you are in the vivado-mac directory
 ./openFPGALoader -b basys3 --xvc
 ```
 
-### Launch Vivado container
+#### Launch Vivado container
 ```bash
 ./scripts/start_container.sh
 ```
